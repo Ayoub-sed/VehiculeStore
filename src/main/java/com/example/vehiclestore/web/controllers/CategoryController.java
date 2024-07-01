@@ -33,7 +33,7 @@ public class CategoryController {
         if (existingCategory != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Category " + category.getName() + " already exists");
         } else {
-            categoryService.addCategory(new Category(null, category.getName()));
+            categoryService.addCategory(new Category(null, category.getName(), category.getDescription(), category.getImage()));
             return ResponseEntity.status(HttpStatus.CREATED).body(category);
         }
     }

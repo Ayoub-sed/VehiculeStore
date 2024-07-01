@@ -13,34 +13,20 @@ public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
     private String type;
-    private String details;
-    private float price;
+
+    private Long price;
+
     private String image;
 
+    private String details;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_name", referencedColumnName = "name")
     private Category category;
 
-    /*
-     * Car :private int kilometers;
-     * private String fuel;
-     * private int power;
-     * private int numDoors;
-     * private String engineType;
-     */
-
-    /*
-     * Bike {
-     * private String bikeType;
-     * private int wheelSize;
-     * // Getters and Setters
-     */
-
-    /*
-     * Motorcycle extends Vehicle {
-     * private String motorcycleType;
-     * private int kilometers;
-     * private int power;
-     */
 }
