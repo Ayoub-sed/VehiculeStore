@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,18 +16,19 @@ public class PurchaseOrder implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+    @Column(name = "purchase_order_date", nullable = false)
     private Date purchaseOrderDate;
-    /* /*  public void setPurchaseOrderDate(String purchaseOrderDate) {
-        this.purchaseOrderDate = purchaseOrderDate;
-    } */ 
     private String status;
 
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id") 
     private Client client;
 
-    @ManyToOne
-    @JoinColumn(name = "vehicle_id", referencedColumnName = "id") 
-    private Vehicle vehicle;
+    @ManyToMany
+    @JoinTable(name = "purchase_order_vehicle",
+            joinColumns = @JoinColumn(name = "purchase_order_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id")
+    )
+    private List<Vehicle> vehicle;
 
 }

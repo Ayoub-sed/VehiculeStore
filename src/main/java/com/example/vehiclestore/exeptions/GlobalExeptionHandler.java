@@ -1,7 +1,5 @@
 package com.example.vehiclestore.exeptions;
 
-
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,7 +12,5 @@ public class GlobalExeptionHandler extends ResponseEntityExceptionHandler {
         return  ResponseEntity.ok().body(ex.getMessage());
 
     }
-  //  @ExceptionHandler(ConnectException.class) {
-   //     return ResponseEntity.ok().body(ex.getMessage());
-   // }
+    
 }
