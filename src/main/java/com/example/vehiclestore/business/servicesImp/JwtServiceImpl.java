@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.business.servicesImp;
+package com.example.vehiclestore.business.servicesImp;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
@@ -12,51 +12,48 @@ import com.example.vehiclestore.business.services.JwtService;
 import java.util.stream.Collectors;
 import java.time.Instant;
 
-
 @Service
 public class JwtServiceImpl implements JwtService {
-    // Encodes JWT tokens
+
     private final JwtEncoder encoder;
 
-    // Specifies the expiration time for the JWT token in seconds, fetched from
-    // application properties!
+    @Value("${jwt.public.key}")
+    private String publicKey;
+
+    @Value("${jwt.private.key}")
+    private String privateKey;
+
     @Value("${jwt.expiration}")
-    private long jwtExpiration;
+    private int expiration;
 
-    // Specifies the name of the cookie that will store the JWT token, fetched from
-    // application properties
     @Value("${jwt.cookie-name}")
-    private String jwtCookieName;
-
+    private String cookieName;
+ 
     public JwtServiceImpl(JwtEncoder encoder) {
         this.encoder = encoder;
     }
 
+
     @Override
-    // After Basic authentication, the Authentication object passed to the
-    // generateToken() method will contain all the necessary user information.
     public String generateToken(Authentication authentication) {
         Instant now = Instant.now();
-        long expiry = jwtExpiration;
-        // the user roles are set to the scope claim
+        long expiry = expiration;
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
-
-        JwtClaimsSet claims = JwtClaimsSet.builder().issuer("self")
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("self")
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .build();
-
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-
     }
 
     @Override
     public ResponseCookie generateJwtCookie(String jwt) {
-        return ResponseCookie.from(jwtCookieName, jwt)
+        return ResponseCookie.from(cookieName, jwt)
                 .path("/")
                 .maxAge(24 * 60 * 60) // 24 hours
                 .httpOnly(true)
@@ -64,11 +61,10 @@ public class JwtServiceImpl implements JwtService {
                 .sameSite("Strict")
                 .build();
     }
-
     @Override
     public ResponseCookie getCleanJwtCookie() {
-        return ResponseCookie.from(jwtCookieName, "")
+        return ResponseCookie.from(cookieName, "")
                 .path("/")
                 .build();
     }
-} */
+}

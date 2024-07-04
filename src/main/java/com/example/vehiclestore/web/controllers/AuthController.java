@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.web.controllers;
+package com.example.vehiclestore.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
@@ -14,7 +14,6 @@ import com.example.vehiclestore.exeptions.DuplicateUserException;
 import com.example.vehiclestore.web.dto.AuthenticationUserDTO;
 import com.example.vehiclestore.web.dto.RegisterUserDTO;
 
-import io.netty.handler.codec.http.HttpHeaders;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -67,4 +66,4 @@ public ResponseEntity<Void> logout(HttpServletRequest request) {
             .header("Set-Cookie", jwtCookie.toString())
             .build();
 }
-} */
+}

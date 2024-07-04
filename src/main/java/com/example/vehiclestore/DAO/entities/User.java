@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.DAO.entities;
+package com.example.vehiclestore.DAO.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -76,4 +76,3 @@ return true;
 }
 }
 
- */

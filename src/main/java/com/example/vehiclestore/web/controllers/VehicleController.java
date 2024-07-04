@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.vehiclestore.DAO.entities.Category;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/vehicles")
+@PreAuthorize("hasRole('ADMIN','USER')")
 public class VehicleController {
 
     @Autowired
@@ -30,16 +33,19 @@ public class VehicleController {
     private CategoryService categoryService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN','USER') and hasAuthority('READ_PRIVILEGE')")
     public List<Vehicle> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Vehicle getVehicleById(@PathVariable Long id) throws ResourceNotFound {
         return vehicleService.getVehicleById(id);
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public Vehicle createVehicle(@RequestBody Vehicle vehicle) {
         String categoryName = vehicle.getCategory().getName();
         Category category = categoryService.getCategoryByName(categoryName);
@@ -53,11 +59,13 @@ public class VehicleController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('UPDATE_PRIVILEGE')")
     public Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle vehicle) throws ResourceNotFound {
         return vehicleService.updateVehicle(id, vehicle);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') and hasAuthority('DELETE_PRIVILEGE')")
     public ResponseEntity<Object> deleteVehicle(@PathVariable Long id) throws ResourceNotFound {
         vehicleService.deleteVehicle(id);
         return new ResponseEntity<>(vehicleService.getClass().getName() + " is deleted", HttpStatus.OK);
@@ -65,6 +73,7 @@ public class VehicleController {
 
     // getVehiculesSortedByPrice
     @GetMapping("/filterByPrice")
+    @PreAuthorize("hasRole('ADMIN','USER') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<Object> sortedByPrice(@RequestParam(required =false, defaultValue = "asc") String sort) {
         List<Vehicle> sortedVehicles = vehicleService.sortedByPrice(sort);
         return new ResponseEntity<>(sortedVehicles, HttpStatus.OK);
@@ -72,17 +81,20 @@ public class VehicleController {
 
     // getVehiculesSortedByName
     @GetMapping("/filterByName")
+    @PreAuthorize("hasRole('ADMIN','USER') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<Object> sortedByName(@RequestParam(required =false, defaultValue = "asc") String sort) {
         List<Vehicle> sortedVehicles = vehicleService.sortedByName(sort);
         return new ResponseEntity<>(sortedVehicles, HttpStatus.OK);
     }
 
     @GetMapping("/category/{categoryName}")
+    @PreAuthorize("hasRole('ADMIN','USER') and hasAuthority('READ_PRIVILEGE')")
     public List<Vehicle> getByCategory(@PathVariable String categoryName) {
         return vehicleService.findByCategoryName(categoryName);
     }
 
  @GetMapping("/pagination")
+ @PreAuthorize("hasRole('ADMIN','USER') and hasAuthority('READ_PRIVILEGE')")
  public Page<Vehicle> getAllVehiclesPagination(@RequestParam (defaultValue = "0") int page,@RequestParam (defaultValue = "2") int pageSize){  
 
     Page<Vehicle> vehiculePage=this.vehicleService.getAllVehiclesPagination(PageRequest.of(page, pageSize));

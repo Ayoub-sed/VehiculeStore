@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.business.services;
+package com.example.vehiclestore.business.services;
 
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
@@ -9,4 +9,4 @@ public interface JwtService {
            ResponseCookie generateJwtCookie(String jwt);
            ResponseCookie getCleanJwtCookie();
 
-} */
+}

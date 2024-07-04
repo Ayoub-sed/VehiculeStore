@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.web.dto;
+package com.example.vehiclestore.web.dto;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -31,4 +31,4 @@ public record RegisterUserDTO(
     public static RegisterUserDTO toRegisterUserDTO(User user) {
         return new RegisterUserDTO(user.getFirstname(), user.getLastname(), user.getEmail(), user.getPassword(), user.getRole());
     }
-} */
+}

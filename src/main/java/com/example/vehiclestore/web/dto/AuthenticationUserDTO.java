@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.web.dto;
+package com.example.vehiclestore.web.dto;
 
 import java.util.List;
 
@@ -17,4 +17,4 @@ public record AuthenticationUserDTO(Long id, String email, List<String> roles) {
         return new AuthenticationUserDTO(user.getId(), user.getEmail(), roles);
     }
 
-} */
+}

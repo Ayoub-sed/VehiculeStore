@@ -1,19 +1,31 @@
 package com.example.vehiclestore.security;
 
-public class CookieBearerTokenResolver {
+import org.springframework.util.StringUtils;
+import org.springframework.web.util.WebUtils;
 
-    public static String resolveToken(String cookie) {
-        if (cookie == null) {
-            return null;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
+
+// Custom implementation of BearerTokenResolver that retrieves the token from a cookie
+public class CookieBearerTokenResolver implements BearerTokenResolver {
+
+    private final String cookieName; // Name of the cookie containing the token
+
+    public CookieBearerTokenResolver(String cookieName) {
+        this.cookieName = cookieName;
+    }
+  @Override
+    public String resolve(HttpServletRequest request) {
+        Cookie cookie = WebUtils.getCookie(request, cookieName);
+        if (cookie != null) {
+        String token = cookie.getValue();
+        if (StringUtils.hasText(token)) {
+            return token;
         }
-        String[] parts = cookie.split(";");
-        for (String part : parts) {
-            if (part.trim().startsWith("Bearer")) {
-                return part.substring(7);
-            }
         }
         return null;
     }
 
-    
+   
 }

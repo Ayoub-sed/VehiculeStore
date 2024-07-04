@@ -29,6 +29,6 @@ public class PurchaseOrder implements Serializable{
             joinColumns = @JoinColumn(name = "purchase_order_id"),
             inverseJoinColumns = @JoinColumn(name = "vehicle_id")
     )
-    private List<Vehicle> vehicle;
+    private List<Vehicle> vehicles;
 
 }

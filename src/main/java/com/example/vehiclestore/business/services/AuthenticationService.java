@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.business.services;
+package com.example.vehiclestore.business.services;
 
 
 import org.springframework.security.core.Authentication;
@@ -11,4 +11,4 @@ public interface AuthenticationService {
     
     User register(User user) throws DuplicateUserException;
     AuthenticationUserDTO login(Authentication authentication);
-} */
+}

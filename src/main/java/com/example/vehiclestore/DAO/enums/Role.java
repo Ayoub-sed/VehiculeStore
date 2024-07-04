@@ -1,4 +1,4 @@
-/* package com.example.vehiclestore.DAO.enums;
+package com.example.vehiclestore.DAO.enums;
 
 
 import lombok.Getter;
@@ -32,4 +32,4 @@ public List<SimpleGrantedAuthority> getAuthorities() {
     authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
     return authorities;
 }
-} */
+}
